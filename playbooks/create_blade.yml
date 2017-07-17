@@ -91,6 +91,6 @@
       trunk_allowed_vlans: 2-500,1000-2999
       state: present
       host: "{{ item.name }}"
-		  when_items:
+      when_items:
         - switch1
         - switch2
