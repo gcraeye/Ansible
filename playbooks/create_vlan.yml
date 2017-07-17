@@ -11,6 +11,7 @@
       private: False
 
   tasks:
+  - name: ccreation vlan "{{ idvlan }}"
     nxos-vlan:
       vlan_id: "{{ idvlan }}"
       name: "{{ namevlan }}"
