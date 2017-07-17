@@ -1,0 +1,96 @@
+---
+- name: Configuration de blade sur nexus
+  hosts: swfot1-bv12h, swfot1-br12m
+
+  vars_prompt:
+    - name: switch1
+      prompt: "switch1 :"
+      private: False
+    - name: switch1.int1
+      prompt: "switch1.int1 :"
+      private: False
+    - name: switch1.int2
+      prompt: "switch1.int2 :"
+      private: False
+    - name: switch2
+      prompt: "switch2 :"
+      private: False
+    - name: switch2.int1
+      prompt: "switch2.int1 :"
+      private: False
+    - name: switch2.int2
+      prompt: "switch2.int2 :"
+      private: False
+    
+  tasks:
+    - nxos_interface:
+      interface: "{{ switch1.int1 }}"
+      description: 'BLT50 VC1X2'
+      mode: layer2
+      host: "{{ switch1.name }}"
+      admin_state: up
+      state: present
+
+    - nxos_interface:
+      interface: "{{ switch2.int1 }}"
+      description: 'BLT50 VC1X3'
+      mode: layer2
+      host: "{{ switch2.name }}"
+      admin_state: up
+      state: present
+
+    - nxos_interface:
+      interface: "{{ switch1.int2 }}"
+      description: 'BLT50 VC2X2'
+      mode: layer2
+      host: "{{ switch1.name }}"
+      admin_state: up
+      state: present
+
+    - nxos_interface:
+      interface: "{{ switch2.int2 }}"
+      description: 'BLT50 VC2X3'
+      mode: layer2
+      host: "{{ switch2.name }}"
+      admin_state: up
+      state: present
+
+    - nxos_portchannel:
+      group: 1050
+      members: ["{{ item.int1 }}"]
+      mode: active
+      state: present
+      host: "{{ item.name }}"
+      when_items:
+        - switch1
+        - switch2
+
+    - nxos_portchannel:
+      group: 1550
+      members: ["{{ item.int2 }}"]
+      mode: active
+      state: present
+      host: "{{ item.name }}"
+      when_items:
+        - switch1
+        - switch2
+
+    - nxos_switchport:
+      interface: port-channel1050
+      mode: trunk
+      trunk_allowed_vlans: 2-500,1000-2999
+      state: present
+      host: "{{ item.name }}"
+      when_items:
+        - switch1
+        - switch2
+
+    - nxos_switchport:
+      interface: port-channel550
+      mode: trunk
+      trunk_allowed_vlans: 2-500,1000-2999
+      state: present
+      host: "{{ item.name }}"
+		  when_items:
+        - switch1
+        - switch2
