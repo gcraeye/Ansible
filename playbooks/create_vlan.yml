@@ -1,6 +1,7 @@
 ---
-- name: creer un vlan
+- name: configure vlan
   hosts: all
+  connection: local
 
   vars_prompt:
     - name: idvlan
@@ -11,9 +12,10 @@
       private: False
 
   tasks:
-  - name: ccreation vlan "{{ idvlan }}"
-    nxos-vlan:
-      vlan_id: "{{ idvlan }}"
-      name: "{{ namevlan }}"
-      admin_state: up
-      state:  present
+    - name: create vlan "{{ idvlan }}"
+      nxos_vlan:
+        host: "{{ inventory_hostname }}" 
+        vlan_id: "{{ idvlan }}"
+        name: "{{ namevlan }}"
+        admin_state: up
+        state:  present
