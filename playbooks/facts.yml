@@ -1,0 +1,8 @@
+- name: collect network facts from devices
+  hosts: all
+
+  roles:
+    - { role: network_facts }
+
+  tasks:
+    - debug: msg="Node {{ hostname }} is type {{ device_os }} running software version {{ version }}"
