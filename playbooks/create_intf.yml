@@ -1,0 +1,20 @@
+---
+- name: configure interface
+  hosts: nxos
+  connection: local
+
+  vars:
+    switch: 
+      name: swfot1-bv12h
+      intf: 
+        name: Ethernet1/48
+        description: Configured by Ansible
+
+  tasks:
+    -name: create interface
+      nxos_interface:
+        host: "{{ switch['name'] }}"
+        interface: "{{ switch['int']['name'] }}"
+        description: "{{ switch['int']['description'] }}"
+        mode: layer2
+        admin_state: up
