@@ -10,11 +10,31 @@
         name: Ethernet1/48
         description: Configured by Ansible
 
+  pre_tasks:
+    - debug:
+        msg: "switch.name : {{ switch['name'] }}"
+    - debug:
+        msg: "switch['intf']['name'] : {{ switch['intf']['name'] }}"
+    - debug:
+        msg: "switch['intf']['description'] : {{ switch['intf']['description'] }}"
+    - name: verify interface config
+      nxos_command:
+        host: "{{ switch['name'] }}"
+        commands: "show running-config {{ switch['intf']['name'] }} | json"
+        wait_for:
+          result[0].stdout.description eq ''
+    
   tasks:
-    -name: create interface
+    - name: create interface
       nxos_interface:
         host: "{{ switch['name'] }}"
         interface: "{{ switch['int']['name'] }}"
         description: "{{ switch['int']['description'] }}"
         mode: layer2
         admin_state: up
+
+  post_tasks:
+    - name: copy run start
+      nxos_command:
+        host: "{{ switch['name'] }}"
+        commands: "copy running-config startup-config"
