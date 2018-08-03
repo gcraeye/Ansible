@@ -1,0 +1,13 @@
+# file : Hors-production
+
+[PRI_nxos_leaf]
+swfot2-br12m
+swfot2-bv12h
+swcut1-br12m
+swcut1-bv12h
+
+[PRI_nxos_spine]
+
+[PRI:children]
+PRI_nxos_leaf
+PRI_nxos_spine

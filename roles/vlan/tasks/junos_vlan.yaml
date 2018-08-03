@@ -1,0 +1,11 @@
+---
+- name: create vlans
+  junos_vlan:
+    host: "{{ inventory_hostname }}"
+    provider: "{{ cli }}"
+    vlan_id: "{{ idvlan }}"
+    name: "{{ namevlan }}"
+    admin_state: up
+    state: present
+  with_item:
+    - vlans

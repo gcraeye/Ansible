@@ -21,8 +21,8 @@
       nxos_command:
         host: "{{ switch['name'] }}"
         commands: "show running-config {{ switch['intf']['name'] }} | json"
-        wait_for:
-          result[0].stdout.description eq ''
+        register:
+          conf
     
   tasks:
     - name: create interface
@@ -32,6 +32,7 @@
         description: "{{ switch['int']['description'] }}"
         mode: layer2
         admin_state: up
+      changed_when: conf.description neq ''
 
   post_tasks:
     - name: copy run start

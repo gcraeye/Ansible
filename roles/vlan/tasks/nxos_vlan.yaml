@@ -1,0 +1,12 @@
+---
+- name: create vlan "{{ idvlan }}"
+  nxos_vlan:
+    host: "{{ inventory_hostname }}"
+    provider: "{{ cli }}"
+    vlan_id: "{{ item.idvlan }}"
+    name: "{{ item.namevlan }}"
+    admin_state: up
+    state: present
+  with_items:
+    - vlans
+  

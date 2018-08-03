@@ -1,0 +1,4 @@
+interfaces_l2:
+  - { name: ethernet1/1, description: "test access", mode: access, access_vlan: 1999 }
+  - { name: ethernet1/2, description: "test trunck", mode: trunk, trnk_vlans: 2-999 }
+  

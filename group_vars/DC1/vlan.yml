@@ -1,0 +1,3 @@
+vlans:
+  - { id: 2, namevlan: vlan2 }
+  - { id: 3, namevlan: n_HPR_DMZ2_01}

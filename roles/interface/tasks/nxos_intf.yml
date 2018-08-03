@@ -1,0 +1,30 @@
+---
+- name: recup etat interfaces
+  nxos_facts:
+    gather_subset: interfaces
+  register:interfaces
+
+- name: creation repertoire backup
+  file:
+    path: "backups/{{ inventory_hostname }}"
+    state: directory
+    recurse: yes
+
+- name: sauvegarde etat interfaces
+  template:
+    src: intf.j2
+    dest: "backups/{{ inventory_hostname }}/{{ inventory_hostname }}.intf"
+    
+- name: create access interface
+  nxos_interface:
+    aggregate:
+      - "{{ inventory_hostname }}.interfaces"
+    state: present
+
+- name: configure interface l2
+  nxos_l2_interface:
+  with_items: "{{ inventory_hostname }}.interfaces"
+  when: "{{ item.mode }}" == access
+    aggregate:
+      - "{{ inventory_hostname }}.interfaces"
+

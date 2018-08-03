@@ -1,0 +1,1 @@
+include: "{{ ansible_network_os }}_vlan.yaml
