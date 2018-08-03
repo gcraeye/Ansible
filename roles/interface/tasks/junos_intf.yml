@@ -1,6 +1,6 @@
 ---
 - name: recup etat interfaces
-  nxos_facts:
+  junos_facts:
     gather_subset: interfaces
   register: interfaces
 
@@ -16,13 +16,13 @@
     dest: "backups/{{ inventory_hostname }}/{{ inventory_hostname }}.intf"
     
 - name: create access interface
-  nxos_interface:
+  junos_interface:
     aggregate:
       - "{{ inventory_hostname }}.interfaces"
     state: present
 
 - name: configure interface l2
-  nxos_l2_interface:
+  junos_l2_interface:
   with_items: "{{ inventory_hostname }}.interfaces"
   when: "{{ item.mode }}" == access
     aggregate:

@@ -1,0 +1,7 @@
+---
+- name: creation DMZ
+  hosts: all
+
+  roles:
+    - vlan
+    - interface

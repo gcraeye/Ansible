@@ -1,2 +1,3 @@
 ---
-include: "{{ ansible_network_os }}_intf.yml"
+- tasks:
+  include_tasks: "{{ ansible_network_os }}_intf.yml"

@@ -1,5 +1,0 @@
-switch:
-  name: swfot1-bv12h
-  intf:
-    name: Ethernet1/48
-    description: Intf1 configured by ansible

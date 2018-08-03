@@ -1,7 +1,0 @@
-cli:
-  - hosts: {{ inventory_hostanme }}
-  - username: loglan
-  - password: vault_password
-  - transport: cli
-
-include: vlan.yml

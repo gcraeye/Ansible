@@ -1,1 +1,4 @@
-include: "{{ ansible_network_os }}_vlan.yaml
+---
+- tasks:
+#  include_tasks: nxos_vlan.yaml
+  include_tasks: "{{ ansible_network_os }}_vlan.yaml"
